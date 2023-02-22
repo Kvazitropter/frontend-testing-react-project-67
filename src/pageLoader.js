@@ -1,24 +1,24 @@
 import axios from 'axios';
 import * as fsp from 'fs/promises';
 import path from 'path';
-import { fileURLToPath } from 'url';
-import formatFilename from './formatFilename.js';
+import formatName from './formatName.js';
+import loadSources from './loadSources.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+export default async (link, outputDirpath = process.cwd()) => {
+  const htmlFilename = formatName(link, '.html');
+  const htmlFilepath = path.join(outputDirpath, htmlFilename);
+  const sourcesDirname = formatName(link, '_files');
+  const sourcesDirpath = path.join(outputDirpath, sourcesDirname);
+  const { origin } = new URL(link);
 
-export default async (link, outputDir = __dirname) => {
-  const outputFile = formatFilename(link);
-  const outputPath = path.join(outputDir, outputFile);
+  try {
+    const { data } = await axios.get(link);
+    await fsp.mkdir(sourcesDirpath);
+    const newHtmlData = await loadSources(data, sourcesDirpath, origin);
+    await fsp.writeFile(htmlFilepath, newHtmlData);
+  } catch (e) {
+    throw new Error(e.message);
+  }
 
-  const { data } = await axios.get(link)
-    .catch(() => {
-      throw new Error('This page doesn\'t exist.');
-    });
-
-  await fsp.writeFile(outputPath, data)
-    .catch(() => {
-      throw new Error('Download fail: specified directory doesn\'t exist.');
-    });
-
-  return { filepath: outputPath };
+  return { filepath: htmlFilepath };
 };
