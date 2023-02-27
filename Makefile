@@ -5,6 +5,6 @@ lint:
 test:
 	npm test
 test-coverage:
-	NODE_OPTIONS=--experimental-vm-modules npx jest --coverage
+	npm test -- --coverage --coverageProvider=v8
 publish:
 	npm publish --dry-run

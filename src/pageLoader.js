@@ -31,6 +31,7 @@ const loadSources = async (htmlData, outputDirpath, htmlUrlOrigin) => {
       const { data } = await axios.get(url, { responseType });
       await fsp.writeFile(filepath, data);
       $(elem).attr(attrib, shortFilepath);
+      log(`Item was successfuly loaded from ${url.toString()}`);
     } catch {
       log(`Failed to load from source: ${url.toString()}`);
     }
