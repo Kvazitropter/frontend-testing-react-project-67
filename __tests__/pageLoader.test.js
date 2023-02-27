@@ -1,4 +1,3 @@
-import * as fs from 'fs';
 import * as fsp from 'fs/promises';
 import path from 'path';
 import nock from 'nock';
@@ -58,8 +57,8 @@ afterAll(() => {
   nock.cleanAll();
 });
 
-beforeEach(() => {
-  tempdir = fs.mkdtempSync(path.join(tmpdir(), 'page-loader-'));
+beforeEach(async () => {
+  tempdir = await fsp.mkdtemp(path.join(tmpdir(), 'page-loader-'));
 });
 
 describe('succesful downloads', () => {
@@ -81,7 +80,7 @@ describe('succesful downloads', () => {
     expect(actualData).toBe(htmlPage.expectedData);
   });
 
-  test.each(sourcesData)('check written data in $expectedFilename', async ({
+  test.each(sourcesData)('check written data %#', async ({
     fixtureFilename, dataType, expectedFilename,
   }) => {
     const fixtureData = await readFixtureFile(fixtureFilename, dataType);
