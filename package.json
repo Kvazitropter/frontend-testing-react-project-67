@@ -8,7 +8,7 @@
   },
   "type": "module",
   "scripts": {
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest"
+    "test": "npx --experimental-vm-modules jest"
   },
   "repository": {
     "type": "git",
