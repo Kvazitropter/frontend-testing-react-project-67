@@ -2,7 +2,9 @@ name: Node CI
 
 on:
   - push
-  - pull_request
+
+env:
+  CI: true
 
 jobs:
   build:
@@ -24,7 +26,7 @@ jobs:
       - run: make lint
       - run: make test
       - name: Test & publish code coverage
-        uses: paambaati/codeclimate-action@v3.2.0
+        uses: paambaati/codeclimate-action@v3.0.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_ID }}
         with:
