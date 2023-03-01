@@ -10,6 +10,10 @@
   "scripts": {
     "test": "npx jest --bail"
   },
+  "jest": {
+    "transform": {},
+    "verbose": true
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Kvazitropter/frontend-testing-react-project-67.git"
