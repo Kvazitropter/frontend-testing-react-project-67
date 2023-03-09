@@ -8,10 +8,7 @@
   },
   "type": "module",
   "scripts": {
-    "test": "npx jest --bail"
-  },
-  "jest": {
-    "verbose": true
+    "test": "npx jest"
   },
   "repository": {
     "type": "git",
